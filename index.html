@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página em Manutenção</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Permanent Marker', cursive;
+        }
+
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #overlay {
+            position: absolute;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .graffiti-text {
+            font-size: 5rem;
+            color: #ff0055;
+            text-transform: uppercase;
+            text-shadow: 
+                3px 3px 0px #000,
+                -1px -1px 0px #000,
+                1px -1px 0px #000,
+                -1px 1px 0px #000,
+                1px 1px 0px #000,
+                5px 5px 15px rgba(255, 0, 85, 0.7),
+                10px 10px 30px rgba(0, 0, 0, 0.5);
+            transform: rotate(-5deg);
+            display: inline-block;
+            padding: 20px;
+            border: 5px solid #ff0055;
+            box-shadow: 5px 5px 0px #000;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .graffiti-text {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Classe para o fade in do vídeo */
+        .fade-in {
+            opacity: 1 !important;
+        }
+
+        /* Classe para o fade out do vídeo e fade in do texto */
+        .show-text {
+            opacity: 1 !important;
+        }
+
+        .hide-video {
+            opacity: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="video-container">
+        <video id="bg-video" autoplay muted loop playsinline>
+            <source src="background_video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos.
+        </video>
+    </div>
+
+    <div id="overlay">
+        <h1 class="graffiti-text">Página em Manutenção</h1>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const videoContainer = document.getElementById('video-container');
+            const overlay = document.getElementById('overlay');
+            const video = document.getElementById('bg-video');
+
+            // Inicia o Fade In do vídeo após o carregamento
+            setTimeout(() => {
+                videoContainer.classList.add('fade-in');
+            }, 500);
+
+            // Após 6 segundos de exibição do vídeo, inicia o Fade Out e mostra o texto
+            // (Ajustado para o vídeo de 8s, permitindo ver um pouco do loop antes da transição)
+            setTimeout(() => {
+                videoContainer.classList.remove('fade-in');
+                videoContainer.classList.add('hide-video');
+                
+                // Pequeno atraso para o texto surgir suavemente enquanto o vídeo desaparece
+                setTimeout(() => {
+                    overlay.classList.add('show-text');
+                }, 1000);
+            }, 6000);
+        });
+    </script>
+</body>
+</html>
